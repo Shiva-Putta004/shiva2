@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login | Fashion</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    :root {
+      --bg: radial-gradient(circle at top left, #1f2937, #020617 60%);
+      --glass: rgba(255,255,255,0.08);
+      --border: rgba(255,255,255,0.25);
+      --primary: #ff3f6c;
+      --text: #f9fafb;
+      --muted: #9ca3af;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      font-family: system-ui, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text);
+    }
+
+    .login-container {
+      width: 420px;
+      max-width: 94%;
+      padding: 28px;
+      border-radius: 24px;
+      background: var(--glass);
+      backdrop-filter: blur(18px);
+      border: 1px solid var(--border);
+      box-shadow: 0 30px 80px rgba(0,0,0,0.8);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-container::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      background: conic-gradient(from 180deg, #ff3f6c, #6366f1, #22c55e, #ff3f6c);
+      z-index: -1;
+      filter: blur(30px);
+      opacity: 0.7;
+    }
+
+    .brand {
+      text-align: center;
+      margin-bottom: 22px;
+    }
+
+    .brand-logo {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: conic-gradient(#ff3f6c, #22c55e, #6366f1, #ff3f6c);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 24px;
+      margin: 0 auto 10px;
+    }
+
+    .brand h1 {
+      font-size: 18px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+
+    .login-title {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 15px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    .form-group label {
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(15,23,42,0.9);
+      color: var(--text);
+      font-size: 14px;
+      outline: none;
+    }
+
+    .form-input:focus {
+      border-color: var(--primary);
+    }
+
+    .login-btn {
+      width: 100%;
+      margin-top: 10px;
+      padding: 12px 0;
+      border-radius: 999px;
+      border: none;
+      background: linear-gradient(135deg, #ff3f6c, #f97316);
+      color: #020617;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 12px 30px rgba(255,63,108,0.5);
+    }
+
+    .login-btn:hover {
+      filter: brightness(1.1);
+      transform: translateY(-1px);
+    }
+
+    .extra-row {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .extra-row a {
+      text-decoration: none;
+      color: #f9fafb;
+    }
+
+    .divider {
+      margin: 18px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 10px;
+      color: var(--muted);
+    }
+
+    .divider::before,
+    .divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .social-login {
+      display: flex;
+      gap: 10px;
+    }
+
+    .social-btn {
+      flex: 1;
+      padding: 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(15,23,42,0.9);
+      color: var(--text);
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .signup-text {
+      margin-top: 16px;
+      text-align: center;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .signup-link {
+      color: #f97316;
+      text-decoration: none;
+    }
+
+    .error-message {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #fca5a5;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      text-align: center;
+      margin-bottom: 10px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-container">
+
+    <div class="brand">
+      <div class="brand-logo">F</div>
+      <h1>FASHION</h1>
+    </div>
+
+    <div class="login-title" id="form-title">Welcome Back</div>
+
+    <div class="error-message" id="error-message"></div>
+
+  <form id="login-form">
+      <div class="form-group">
+        <label>Email / Mobile</label>
+        <input class="form-input" id="login-credential" type="text" required placeholder="Enter your email or mobile">
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+        <input class="form-input" id="login-password" type="password" required placeholder="Enter password">
+      </div>
+
+      <button type="submit" class="login-btn">Login Securely</button>
+    </form>
+
+    <div class="extra-row">
+      <label>
+        <input type="checkbox" id="remember-me"> Remember me
+      </label>
+      <a href="#">Forgot Password?</a>
+    </div>
+
+    <div class="divider">OR</div>
+
+    <div class="social-login">
+      <button class="social-btn">Google</button>
+      <button class="social-btn">Facebook</button>
+    </div>
+
+    <div class="signup-text">
+      New to Fashion?
+      <a href="signup.html">Create Account</a>
+    </div>
+
+  </div>
+
+  <script>
+    const loginForm = document.getElementById("login-form");
+    const errorMessage = document.getElementById("error-message");
+
+    function showError(message) {
+      errorMessage.textContent = message;
+      errorMessage.style.display = "block";
+    }
+
+    function hideError() {
+      errorMessage.style.display = "none";
+    }
+
+    function isValidEmail(email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+    }
+
+    function isValidMobile(mobile) {
+      const mobileRegex = /^[6-9]\d{9}$/;
+      return mobileRegex.test(mobile);
+    }
+
+    loginForm.addEventListener("submit", function(e) {
+      e.preventDefault();
+      hideError();
+
+      const loginInput = document.getElementById("login-credential").value.trim();
+      const password = document.getElementById("login-password").value;
+
+      if (!loginInput || !password) {
+        showError("Please fill in all fields");
+        return;
+      }
+
+      // Get stored users
+      const users = JSON.parse(localStorage.getItem("fashionUsers") || "{}");
+
+      // Check if user exists and password matches
+      if (!users[loginInput]) {
+        showError("Account not found. Please sign up first.");
+        return;
+      }
+
+      if (users[loginInput].password !== password) {
+        showError("Invalid password. Please try again.");
+        return;
+      }
+
+      // Successful login - store session
+      localStorage.setItem("fashionUserSession", loginInput);
+      localStorage.setItem("fashionUserLoginTime", new Date().toISOString());
+
+      // Show success message briefly
+      errorMessage.style.background = "rgba(34, 197, 94, 0.1)";
+      errorMessage.style.borderColor = "rgba(34, 197, 94, 0.3)";
+      errorMessage.style.color = "#bbf7d0";
+      errorMessage.textContent = "Login successful! Redirecting...";
+      errorMessage.style.display = "block";
+
+      setTimeout(() => {
+        window.location.href = "index.html";
+      }, 1500);
+    });
+
+    // Hide error when user starts typing
+    loginForm.addEventListener("input", hideError);
+  </script>
+
+</body>
+</html>
